@@ -1,8 +1,8 @@
-# AI Agent Standards MCP
+# AI Agent Standards MCP (v3.0.0)
 
-Model Context Protocol server for the AI Agent Coding Standards corpus.
+Model Context Protocol server for the AI Agent Coding Standards corpus (supporting skill set `v2.6.1`).
 
-This server exposes the standards corpus, local skills, and recommendation
+This server exposes the standards corpus, local skills (v2.6.1), and recommendation
 workflows as MCP resources, tools, and prompts.
 The standards and skills are bundled in this repository so it can run as an
 independent checkout. This repo intentionally excludes direct AI-agent
