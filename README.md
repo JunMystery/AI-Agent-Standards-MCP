@@ -49,13 +49,38 @@ Do not double-click the stdio launchers above. `stdio` is for MCP clients and ex
 For manual Windows use, open CMD or PowerShell first, then run the command from that terminal.
 
 > [!TIP]
-> **Recommended for MCP Client Configurations (like Claude Desktop)**:
-> Use the Python launcher `python scripts/run-mcp.py` or the batch file `scripts/run-mcp.cmd` in your settings. Avoid using the PowerShell `.ps1` script as a client stdio command, as PowerShell's wrapper pipeline writes an initial newline on startup, triggering an EOF validation error.
-
-For Unix/Linux:
-```bash
-./scripts/run-mcp.sh
-```
+> **Recommended for MCP Client Configurations (like Claude Desktop / VS Code / Cursor)**:
+> Run python directly with `-m ai_agent_standards_mcp` within the virtual environment `.venv` for the most robust cross-platform Stdio setup. This avoids shell-wrapper anomalies (such as PowerShell pipeline newlines).
+>
+> **Linux / macOS configuration**:
+> ```json
+> {
+>   "mcpServers": {
+>     "ai-agent-standards-mcp": {
+>       "command": "/absolute/path/to/repo/.venv/bin/python",
+>       "args": ["-m", "ai_agent_standards_mcp"],
+>       "env": {
+>         "PYTHONPATH": "/absolute/path/to/repo/src"
+>       }
+>     }
+>   }
+> }
+> ```
+>
+> **Windows configuration**:
+> ```json
+> {
+>   "mcpServers": {
+>     "ai-agent-standards-mcp": {
+>       "command": "C:\\absolute\\path\\to\\repo\\.venv\\Scripts\\python.exe",
+>       "args": ["-m", "ai_agent_standards_mcp"],
+>       "env": {
+>         "PYTHONPATH": "C:\\absolute\\path\\to\\repo\\src"
+>       }
+>     }
+>   }
+> }
+> ```
 
 By default the server uses stdio transport and indexes the bundled standards
 corpus in this repository. To point at another standards checkout:

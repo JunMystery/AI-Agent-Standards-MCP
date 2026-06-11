@@ -19,4 +19,10 @@ else
     export PYTHONPATH="$SRC_PATH:$PYTHONPATH"
 fi
 
+if [ -t 0 ] && [ $# -eq 0 ]; then
+    echo "[INFO] Detected interactive terminal session."
+    echo "[INFO] Starting MCP server with Streamable HTTP transport..."
+    exec "$PYTHON" -m ai_agent_standards_mcp --transport streamable-http
+fi
+
 exec "$PYTHON" -m ai_agent_standards_mcp "$@"
