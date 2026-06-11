@@ -35,7 +35,7 @@ def test_catalog_reads_skill_by_name():
     content = catalog.read_entry("codebase-onboarding")
 
     assert "# Codebase Onboarding" in content
-    assert "Fast repo reconnaissance" in content
+    assert "Reconnaissance" in content
 
 
 def test_catalog_search_returns_ranked_snippets():

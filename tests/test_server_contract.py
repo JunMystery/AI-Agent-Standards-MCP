@@ -78,7 +78,23 @@ def test_register_handlers_exposes_expected_mcp_contract():
         "search_entries",
         "recommend_context",
     }
-    assert set(mcp.prompts) == {"apply_standards", "review_ai_code"}
+    assert set(mcp.prompts) == {
+        "apply_standards",
+        "review_ai_code",
+        "init",
+        "plan",
+        "design",
+        "visualize",
+        "code",
+        "run",
+        "test",
+        "deploy",
+        "debug",
+        "refactor",
+        "audit",
+        "rollback",
+        "recap",
+    }
 
     document = mcp.resources["standards://document/{identifier}"]["func"]("karpathy-principles")
     skill = mcp.resources["standards://skill/{name}"]["func"]("codebase-onboarding")
@@ -88,7 +104,7 @@ def test_register_handlers_exposes_expected_mcp_contract():
     assert "# Karpathy Coding Principles" in document
     assert "# Codebase Onboarding" in skill
     assert any("security" in item["path"].lower() for item in recommendations["recommendations"])
-    assert "Apply AI-Coding-Standards v2.6.1" in prompt
+    assert "Apply AI-Coding-Standards v3.0.0" in prompt
 
 
 def test_create_server_passes_http_host_and_port(monkeypatch):
