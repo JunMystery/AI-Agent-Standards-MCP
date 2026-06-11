@@ -1,5 +1,10 @@
 # AI Agent Standards MCP (v3.0.3)
 
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![MCP Version](https://img.shields.io/badge/mcp-%3E%3D1.0.0-green)](https://modelcontextprotocol.io/)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](#development)
+
 Model Context Protocol server for the AI Agent Coding Standards corpus (supporting skill set `v3.0.3`).
 
 This server exposes the standards corpus, local skills (v3.0.3), and recommendation
@@ -32,6 +37,15 @@ python -m venv .venv
 # On Linux / macOS:
 .venv/bin/pip install -e ".[dev]"
 ```
+
+### Quick Example (Testing with MCP Inspector)
+You can quickly verify and interact with the server locally using the Model Context Protocol Inspector:
+
+1. Run the inspector pointing to the Python module in your virtual environment:
+   ```bash
+   npx @modelcontextprotocol/inspector .venv/bin/python -m ai_agent_standards_mcp
+   ```
+2. Open the printed URL (usually `http://localhost:5173`) in your browser to interactively call tools (like `list_entries` or `recommend_context`) and inspect prompts (like `plan` or `code`).
 
 ## Run
 
