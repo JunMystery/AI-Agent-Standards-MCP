@@ -53,6 +53,10 @@ def main():
     antigravity_path = Path.home() / ".gemini" / "config" / "mcp_config.json"
     targets.append(("Antigravity IDE", antigravity_path, True))
 
+    # Cursor Native config path (cross-platform)
+    cursor_native_path = Path.home() / ".cursor" / "mcp.json"
+    targets.append(("Cursor Native", cursor_native_path, True))
+
     # Cline & Roo-Code for VS Code and Cursor
     extensions = [
         ("VS Code Cline", code_path / "saoudrizwan.claude-dev" / "settings" / "cline_mcp_settings.json"),

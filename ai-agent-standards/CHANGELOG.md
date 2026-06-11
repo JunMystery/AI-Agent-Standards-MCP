@@ -2,6 +2,11 @@
 
 Track versions and updates for the AI Agent Coding Standards framework.
 
+## [3.0.3] - 2026-06-11
+
+### Added
+- **Cursor Native Auto-Installation:** Updated `scripts/install-mcp.py` to automatically detect and configure the `ai-agent-standards-mcp` server inside the global Cursor configuration file `~/.cursor/mcp.json` (for Cursor Native MCP).
+
 ## [3.0.2] - 2026-06-11
 
 ### Added
@@ -238,6 +243,7 @@ Track versions and updates for the AI Agent Coding Standards framework.
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
+| 3.0.3 | 2026-06-11 | Add Cursor Native auto-installation support in scripts/install-mcp.py | Released |
 | 3.0.2 | 2026-06-11 | Add Codex auto-installation support in scripts/install-mcp.py | Released |
 | 3.0.1 | 2026-06-11 | Fix VS Code MCP client activation hang in run-mcp.cmd wrapper script | Released |
 | 3.0.0 | 2026-06-11 | Major release: Pipeline documentation parity, review checklist parity, large-file audit scope filtering | Released |
