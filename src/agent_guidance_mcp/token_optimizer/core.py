@@ -18,7 +18,6 @@ from .strategies import (
     PatternDeduplication,
     SemanticCompression,
     StructuralGrouping,
-    compact_json_text,
 )
 
 
@@ -141,7 +140,7 @@ class TokenOptimizer:
         if self.cache is not None:
             cached = self.cache.get(cache_key)
             if cached is not None:
-                if isinstance(cached.optimized_content, dict):
+                if isinstance(cached.optimized_content, (dict, list)):
                     optimized = copy.deepcopy(cached.optimized_content)
                     cached = OptimizationResult(
                         optimized_content=optimized,
@@ -155,7 +154,8 @@ class TokenOptimizer:
                         truncated=cached.truncated,
                         metadata=cached.metadata,
                     )
-                    optimized["rtk"] = cached.rtk_metadata()
+                    if isinstance(optimized, dict):
+                        optimized["rtk"] = cached.rtk_metadata()
                 self.monitor.record_optimization(cached)
                 return cached
 
@@ -211,6 +211,22 @@ class TokenOptimizer:
             )
 
         if isinstance(content, list):
+            over_budget = len(serialized) > max_chars
+            allow_generated = policy == "safe_generated"
+            if over_budget and allow_generated:
+                pruned, prune_meta, pruned_trunc = prune_structure(content, max_chars)
+                if pruned_trunc:
+                    return self._finalize(
+                        pruned,
+                        original_tokens,
+                        serialized,
+                        ["truncation"],
+                        content_type,
+                        action_type,
+                        True,
+                        prune_meta,
+                        max_chars,
+                    )
             return self._result(
                 content, original_tokens, original_tokens, "none", content_type, action_type
             )
@@ -287,16 +303,12 @@ class TokenOptimizer:
             return optimized, metadata, strategies, truncated
 
         if over_budget and allow_generated:
-            text, text_meta = self.truncation.truncate(serialized, "json", max_chars)
-            try:
-                loaded = json.loads(text)
-            except json.JSONDecodeError:
-                return optimized, metadata, strategies, truncated
-            if isinstance(loaded, dict):
-                metadata.update(text_meta)
+            pruned, prune_meta, pruned_trunc = prune_structure(optimized, max_chars)
+            if pruned_trunc:
+                metadata.update(prune_meta)
                 strategies.append("truncation")
                 truncated = True
-                return loaded, metadata, strategies, truncated
+                return pruned, metadata, strategies, truncated
 
         return optimized, metadata, strategies, truncated
 
@@ -555,9 +567,82 @@ class TokenOptimizer:
         context: dict[str, Any],
         config: OptimizationConfig,
     ) -> str:
-        config_text = f"{config.enabled}:{config.level}:{config.max_tokens}"
+        config_text = (
+            f"{config.enabled}:{config.level}:{config.max_tokens}:"
+            f"{config.auto_detect_type}:{config.preserve_structure}:"
+            f"{config.aggressive_mode}"
+        )
         raw = f"{action_type}\0{context}\0{config_text}\0{serialized}"
         return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def prune_structure(data: Any, target_len: int) -> tuple[Any, dict[str, Any], bool]:
+    serialized = json.dumps(data, ensure_ascii=False)
+    if len(serialized) <= target_len:
+        return data, {}, False
+
+    truncated = False
+    metadata = {}
+
+    if isinstance(data, list):
+        low, high = 0, len(data)
+        best_sliced = data
+        best_count = len(data)
+        while low <= high:
+            mid = (low + high) // 2
+            sliced = data[:mid]
+            test_serialized = json.dumps(sliced, ensure_ascii=False)
+            if len(test_serialized) <= target_len:
+                best_sliced = sliced
+                best_count = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+        omitted = len(data) - best_count
+        if omitted > 0:
+            truncated = True
+            metadata["omitted_count"] = omitted
+            return best_sliced, metadata, True
+        return data, {}, False
+
+    elif isinstance(data, dict):
+        pruned = dict(data)
+        for k, v in list(pruned.items()):
+            if isinstance(v, (list, dict)):
+                sub_pruned, sub_meta, sub_trunc = prune_structure(v, max(100, target_len // 2))
+                if sub_trunc:
+                    pruned[k] = sub_pruned
+                    metadata.update(sub_meta)
+                    truncated = True
+        
+        serialized = json.dumps(pruned, ensure_ascii=False)
+        if len(serialized) <= target_len:
+            return pruned, metadata, truncated
+
+        keys = list(pruned.keys())
+        low, high = 0, len(keys)
+        best_keys = keys
+        best_count = len(keys)
+        while low <= high:
+            mid = (low + high) // 2
+            test_dict = {k: pruned[k] for k in keys[:mid]}
+            test_serialized = json.dumps(test_dict, ensure_ascii=False)
+            if len(test_serialized) <= target_len:
+                best_keys = keys[:mid]
+                best_count = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+        
+        omitted_keys = len(keys) - best_count
+        if omitted_keys > 0:
+            truncated = True
+            metadata["omitted_keys"] = omitted_keys
+            return {k: pruned[k] for k in best_keys}, metadata, True
+        
+        return pruned, metadata, truncated
+
+    return data, {}, False
 
 
 __all__ = [
@@ -565,5 +650,4 @@ __all__ = [
     "OptimizationConfig",
     "OptimizationResult",
     "TokenOptimizer",
-    "compact_json_text",
 ]

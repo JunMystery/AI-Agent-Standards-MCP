@@ -2,6 +2,19 @@
 
 Track versions and updates for the AI Agent Coding Standards framework.
 
+## [3.2.1] - 2026-06-12
+
+### Fixed
+- **Recursive JSON Pruning** - Replaced raw text JSON truncation with a recursive dictionary/list pruner (`prune_structure`) that slices nested lists and drops keys to ensure valid JSON output.
+- **Top-Level List Support** - Enabled pruning and caching of top-level list payloads under the `safe_generated` policy.
+- **Cache Hit Safety** - Deep-copied lists on cache hits to protect cached payloads from mutation.
+- **Cache Key Precision** - Included all configuration parameters (`auto_detect_type`, `preserve_structure`, `aggressive_mode`) in cache keys to prevent settings collisions.
+- **Inline repeated log/error collapsing** - Collapse error lines positionally inline with counts instead of appending summaries to the end of logs.
+
+### Changed
+- **Version bump** - Synchronized version strings across codebase and package manifest to v3.2.1.
+- **Dead code cleanup** - Removed unused `compact_json_text` function.
+
 ## [3.2.0] - 2026-06-12
 
 ### Added

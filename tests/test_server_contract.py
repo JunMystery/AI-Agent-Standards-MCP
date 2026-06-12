@@ -115,7 +115,7 @@ def test_register_handlers_exposes_expected_mcp_contract():
     assert any("security" in item["path"].lower() for item in recommendations["recommendations"])
     assert any(entry["path"] == "README.md" for entry in project_tree["tree"])
     assert project_tree["rtk"]["content_type"] == "tree"
-    assert "Apply AI-Coding-Standards v3.2.0" in prompt
+    assert "Apply AI-Coding-Standards v3.2.1" in prompt
     assert stats["total_actions"] >= 5
 
 

@@ -280,3 +280,84 @@ def test_stats_tools_report_and_reset():
     reset = mcp.tools["reset_rtk_stats"]()
     assert reset == {"status": "reset"}
     assert mcp.tools["get_rtk_stats"]()["total_actions"] == 0
+
+
+def test_general_dict_pruning():
+    from agent_guidance_mcp.token_optimizer.core import prune_structure
+    data = {
+        "key1": "value1",
+        "key2": "value2",
+        "nested_list": ["item1", "item2", "item3", "item4", "item5"],
+        "nested_dict": {"k1": "v1", "k2": "v2", "k3": "v3"}
+    }
+    
+    # Check that it returns unchanged if it fits in target_len
+    pruned, meta, truncated = prune_structure(data, 1000)
+    assert not truncated
+    assert pruned == data
+
+    # Prune nested collections
+    pruned, meta, truncated = prune_structure(data, 100)
+    assert truncated
+    # Check that nested_list or nested_dict was pruned or keys omitted
+    assert len(pruned.get("nested_list", [])) < 5 or len(pruned.get("nested_dict", {})) < 3 or "key2" not in pruned
+
+
+def test_cache_hit_deepcopies_lists():
+    # Set max_tokens to 1 to force truncation and cache entry
+    optimizer = TokenOptimizer(OptimizationConfig(cache_enabled=True, max_tokens=1))
+    payload = [{"name": "item1"}, {"name": "item2"}, {"name": "item3"}]
+    
+    first = optimizer.optimize(payload, "tool:list_entries", context={"mutation_policy": "safe_generated"})
+    second = optimizer.optimize(payload, "tool:list_entries", context={"mutation_policy": "safe_generated"})
+    
+    assert second.cache_hit is True
+    # Mutate the list returned by second call
+    second.optimized_content.append({"name": "item4"})
+    
+    # Fetch third time, it should NOT contain the mutated item since it deepcopies from the cache
+    third = optimizer.optimize(payload, "tool:list_entries", context={"mutation_policy": "safe_generated"})
+    assert {"name": "item4"} not in third.optimized_content
+
+
+def test_cache_key_varies_by_auto_detect():
+    optimizer = TokenOptimizer()
+    payload = "def test_func(): pass"
+    
+    # First config has auto_detect_type=True
+    config1 = OptimizationConfig(auto_detect_type=True)
+    key1 = optimizer._cache_key(payload, "tool:test", {}, config1)
+    
+    # Second config has auto_detect_type=False
+    config2 = OptimizationConfig(auto_detect_type=False)
+    key2 = optimizer._cache_key(payload, "tool:test", {}, config2)
+    
+    assert key1 != key2
+
+
+def test_inline_repeated_error_collapsing():
+    from agent_guidance_mcp.token_optimizer.strategies import SemanticCompression
+    compressor = SemanticCompression()
+    
+    logs = (
+        "normal log line 1\n"
+        "ConnectionTimeoutError: attempt 1 failed\n"
+        "ConnectionTimeoutError: attempt 2 failed\n"
+        "ConnectionTimeoutError: attempt 3 failed\n"
+        "ConnectionTimeoutError: attempt 4 failed\n"
+        "ConnectionTimeoutError: attempt 5 failed\n"
+        "normal log line 2"
+    )
+    
+    compacted, meta = compressor.compress(logs, "error", 1000)
+    
+    expected = (
+        "normal log line 1\n"
+        "ConnectionTimeoutError: attempt 1 failed\n"
+        "ConnectionTimeoutError: attempt 2 failed\n"
+        "ConnectionTimeoutError: attempt 3 failed\n"
+        "[RTK: 2 similar error lines collapsed]\n"
+        "normal log line 2"
+    )
+    assert compacted == expected
+

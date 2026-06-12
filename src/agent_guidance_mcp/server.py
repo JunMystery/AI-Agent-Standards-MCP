@@ -223,7 +223,7 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
         """Generate a standards-aware prompt for a coding task."""
         recommendations = catalog.recommend_context(f"{focus} {task}".strip(), limit=6)
         lines = [
-            "Apply AI-Coding-Standards v3.2.0 while completing this task.",
+            "Apply AI-Coding-Standards v3.2.1 while completing this task.",
             "",
             f"Task: {task}",
             f"Focus: {focus}",
@@ -249,7 +249,7 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
         return optimize_response(
             "\n".join(
                 [
-                    f"Review {scope} against AI-Coding-Standards v3.2.0.",
+                    f"Review {scope} against AI-Coding-Standards v3.2.1.",
                     "",
                     "Prioritize findings in this order:",
                     "- Correctness bugs and behavioral regressions.",

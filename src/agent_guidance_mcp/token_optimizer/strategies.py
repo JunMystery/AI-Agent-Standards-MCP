@@ -30,20 +30,30 @@ class SemanticCompression:
     def _summarize_repeated_errors(self, content: str) -> str:
         lines = content.splitlines()
         signatures: Counter[str] = Counter()
-        kept: list[str] = []
-
         for line in lines:
             if re.search(r"error|exception|failed", line, re.IGNORECASE):
                 signature = re.sub(r"\d+", "N", line)
                 signatures[signature] += 1
-                if signatures[signature] <= 3:
+
+        kept: list[str] = []
+        signature_seen: Counter[str] = Counter()
+        for line in lines:
+            if re.search(r"error|exception|failed", line, re.IGNORECASE):
+                signature = re.sub(r"\d+", "N", line)
+                signature_seen[signature] += 1
+                seen_count = signature_seen[signature]
+                total_count = signatures[signature]
+
+                if seen_count <= 3:
                     kept.append(line)
+                elif seen_count == 4:
+                    omitted = total_count - 3
+                    kept.append(f"[RTK: {omitted} similar error lines collapsed]")
+                else:
+                    continue
             else:
                 kept.append(line)
 
-        omitted = sum(count - 3 for count in signatures.values() if count > 3)
-        if omitted:
-            kept.append(f"[RTK: {omitted} similar error lines collapsed]")
         return "\n".join(kept)
 
 
@@ -155,25 +165,3 @@ class PatternDeduplication:
 
         return "\n".join(result), {"collapsed_count": collapsed_count}
 
-
-def compact_json_text(content: str, max_items: int = 20) -> tuple[str, dict[str, Any]]:
-    try:
-        data = json.loads(content)
-    except json.JSONDecodeError:
-        return content, {"omitted_count": 0}
-
-    if isinstance(data, list) and len(data) > max_items:
-        compact = {
-            "items": data[:max_items],
-            "_rtk_omitted_count": len(data) - max_items,
-            "_rtk_total_items": len(data),
-        }
-        return json.dumps(compact, indent=2), {"omitted_count": len(data) - max_items}
-
-    if isinstance(data, dict) and len(data) > max_items:
-        kept = dict(list(data.items())[:max_items])
-        kept["_rtk_omitted_count"] = len(data) - max_items
-        kept["_rtk_total_keys"] = len(data)
-        return json.dumps(kept, indent=2), {"omitted_count": len(data) - max_items}
-
-    return content, {"omitted_count": 0}
