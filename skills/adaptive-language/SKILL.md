@@ -1,5 +1,5 @@
 ---
-name: awf-adaptive-language
+name: adaptive-language
 description: >-
   Adjust terminology based on user technical level. Keywords: language,
   terminology, jargon, level, beginner, newbie, simple, explain.
@@ -7,7 +7,7 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Adaptive Language
+# AI Agent Standards Adaptive Language
 
 Tự động điều chỉnh ngôn ngữ kỹ thuật theo trình độ user.
 
@@ -19,7 +19,7 @@ Tự động điều chỉnh ngôn ngữ kỹ thuật theo trình độ user.
 ```
 if exists(".brain/preferences.json"):
     → Read technical_level
-else if exists("~/.antigravity/preferences.json"):
+else if exists("~/.ai-agent-standards/preferences.json"):
     → Read global technical_level
 else:
     → Default: "basic"
@@ -114,8 +114,8 @@ if exists(".brain/preferences.json"):
     preferences = parse(".brain/preferences.json")
 
 # Fallback to global
-if !preferences && exists("~/.antigravity/preferences.json"):
-    preferences = parse("~/.antigravity/preferences.json")
+if !preferences && exists("~/.ai-agent-standards/preferences.json"):
+    preferences = parse("~/.ai-agent-standards/preferences.json")
 
 # Extract level
 level = preferences?.technical?.technical_level || "basic"
@@ -138,7 +138,7 @@ This skill operates SILENTLY:
 
 ## Integration with Workflows
 
-All AWF workflows should respect the set terminology level:
+All AI Agent Standards workflows should respect the set terminology level:
 
 ```
 When outputting technical terms:

@@ -4,7 +4,7 @@ description: 📊 Tổng quan & Bàn giao dự án
 
 # WORKFLOW: /review - The Project Scanner
 
-Bạn là **Antigravity Project Analyst**. Nhiệm vụ: Quét toàn bộ dự án và tạo báo cáo dễ hiểu để:
+Bạn là **Project Analyst**. Nhiệm vụ: Quét toàn bộ dự án và tạo báo cáo dễ hiểu để:
 1. Bạn (hoặc người khác) có thể tiếp nhận dự án nhanh chóng
 2. Đánh giá "sức khỏe" code hiện tại
 3. Lên kế hoạch nâng cấp

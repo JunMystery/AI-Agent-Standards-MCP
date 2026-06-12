@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from . import project_context
 from .catalog import StandardsCatalog, build_catalog
 
 try:
@@ -73,12 +74,58 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
         """Recommend standards, skills, and references for a coding task."""
         return catalog.recommend_context(task=task, limit=limit)
 
+    @mcp.tool()
+    def export_project_snapshot(
+        project_path: str = ".",
+        output_path: str = project_context.DEFAULT_SNAPSHOT_PATH,
+        max_file_bytes: int = project_context.DEFAULT_MAX_FILE_BYTES,
+        max_total_bytes: int = project_context.DEFAULT_MAX_TOTAL_BYTES,
+    ) -> dict[str, object]:
+        """Export bounded project tree and code content for AI agent context."""
+        return project_context.export_project_snapshot(
+            project_path=project_path,
+            output_path=output_path,
+            max_file_bytes=max_file_bytes,
+            max_total_bytes=max_total_bytes,
+        )
+
+    @mcp.tool()
+    def get_project_tree(
+        project_path: str = ".", max_depth: int = project_context.DEFAULT_MAX_DEPTH
+    ) -> dict[str, object]:
+        """Return a bounded source tree for a project."""
+        return project_context.get_project_tree(project_path=project_path, max_depth=max_depth)
+
+    @mcp.tool()
+    def read_project_file(
+        project_path: str = ".",
+        relative_path: str = "",
+        start_line: int = 1,
+        max_lines: int = 300,
+    ) -> dict[str, object]:
+        """Read a bounded line range from one project text file."""
+        return project_context.read_project_file(
+            project_path=project_path,
+            relative_path_value=relative_path,
+            start_line=start_line,
+            max_lines=max_lines,
+        )
+
+    @mcp.tool()
+    def search_project_code(
+        project_path: str = ".", query: str = "", limit: int = 20
+    ) -> dict[str, object]:
+        """Search project source files and return bounded snippets."""
+        return project_context.search_project_code(
+            project_path=project_path, query=query, limit=limit
+        )
+
     @mcp.prompt()
     def apply_standards(task: str, focus: str = "general") -> str:
         """Generate a standards-aware prompt for a coding task."""
         recommendations = catalog.recommend_context(f"{focus} {task}", limit=6)
         lines = [
-            "Apply AI-Coding-Standards v3.0.3 while completing this task.",
+            "Apply AI-Coding-Standards v3.1.0 while completing this task.",
             "",
             f"Task: {task}",
             f"Focus: {focus}",
@@ -103,7 +150,7 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
         """Generate an AI-code review prompt grounded in this standards framework."""
         return "\n".join(
             [
-                f"Review {scope} against AI-Coding-Standards v3.0.3.",
+                f"Review {scope} against AI-Coding-Standards v3.1.0.",
                 "",
                 "Prioritize findings in this order:",
                 "- Correctness bugs and behavioral regressions.",
@@ -121,7 +168,7 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
 
     @mcp.prompt()
     def init(project_name: str = "") -> str:
-        """Khởi tạo dự án mới (AWF /init)"""
+        """Khởi tạo dự án mới."""
         content = catalog.read_entry("workflow-init")
         if project_name:
             return f"{content}\n\nProject Name: {project_name}"
@@ -129,19 +176,19 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
 
     @mcp.prompt()
     def plan(task: str) -> str:
-        """Lên kế hoạch thiết kế tính năng (AWF /plan)"""
+        """Lên kế hoạch thiết kế tính năng."""
         content = catalog.read_entry("workflow-plan")
         return f"{content}\n\nTask to plan: {task}"
 
     @mcp.prompt()
     def design(feature: str) -> str:
-        """Thiết kế kỹ thuật cho tính năng (AWF /design)"""
+        """Thiết kế kỹ thuật cho tính năng."""
         content = catalog.read_entry("workflow-design")
         return f"{content}\n\nFeature to design: {feature}"
 
     @mcp.prompt()
     def visualize(ui_description: str = "") -> str:
-        """Thiết kế giao diện UI/UX (AWF /visualize)"""
+        """Thiết kế giao diện UI/UX."""
         content = catalog.read_entry("workflow-visualize")
         if ui_description:
             return f"{content}\n\nUI Description: {ui_description}"
@@ -149,19 +196,19 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
 
     @mcp.prompt()
     def code(task: str) -> str:
-        """Lập trình tính năng chất lượng cao (AWF /code)"""
+        """Lập trình tính năng chất lượng cao."""
         content = catalog.read_entry("workflow-code")
         return f"{content}\n\nTask to implement:\n{task}"
 
     @mcp.prompt()
     def run(environment: str = "local") -> str:
-        """Khởi chạy ứng dụng (AWF /run)"""
+        """Khởi chạy ứng dụng."""
         content = catalog.read_entry("workflow-run")
         return f"{content}\n\nTarget environment: {environment}"
 
     @mcp.prompt()
     def test(test_target: str = "") -> str:
-        """Chạy test cases & tự động viết test (AWF /test)"""
+        """Chạy test cases và tự động viết test."""
         content = catalog.read_entry("workflow-test")
         if test_target:
             return f"{content}\n\nTest target: {test_target}"
@@ -169,31 +216,31 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
 
     @mcp.prompt()
     def deploy(target: str = "production") -> str:
-        """Triển khai ứng dụng lên production/staging (AWF /deploy)"""
+        """Triển khai ứng dụng lên production/staging."""
         content = catalog.read_entry("workflow-deploy")
         return f"{content}\n\nDeploy target: {target}"
 
     @mcp.prompt()
     def debug(error_message: str) -> str:
-        """Phân tích và sửa lỗi tự động (AWF /debug)"""
+        """Phân tích và sửa lỗi tự động."""
         content = catalog.read_entry("workflow-debug")
         return f"{content}\n\nError/Bug Description:\n{error_message}"
 
     @mcp.prompt()
     def refactor(target_file: str) -> str:
-        """Tối ưu hóa và dọn dẹp code an toàn (AWF /refactor)"""
+        """Tối ưu hóa và dọn dẹp code an toàn."""
         content = catalog.read_entry("workflow-refactor")
         return f"{content}\n\nFile or module to refactor: {target_file}"
 
     @mcp.prompt()
     def audit(scope: str = "security") -> str:
-        """Kiểm tra sức khỏe dự án (AWF /audit)"""
+        """Kiểm tra sức khỏe dự án."""
         content = catalog.read_entry("workflow-audit")
         return f"{content}\n\nAudit scope: {scope}"
 
     @mcp.prompt()
     def rollback(revision: str = "") -> str:
-        """Khôi phục về trạng thái cũ an toàn (AWF /rollback)"""
+        """Khôi phục về trạng thái cũ an toàn."""
         content = catalog.read_entry("workflow-rollback")
         if revision:
             return f"{content}\n\nRollback revision/commit: {revision}"
@@ -201,7 +248,7 @@ def register_handlers(mcp: Any, catalog: StandardsCatalog) -> None:
 
     @mcp.prompt()
     def recap(session_id: str = "") -> str:
-        """Khôi phục ngữ cảnh làm việc từ session cũ (AWF /recap)"""
+        """Khôi phục ngữ cảnh làm việc từ session cũ."""
         content = catalog.read_entry("workflow-recap")
         if session_id:
             return f"{content}\n\nSession ID: {session_id}"

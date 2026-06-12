@@ -1,5 +1,5 @@
 ---
-name: awf-error-translator
+name: error-translator
 description: >-
   Translate technical errors to human-friendly language. Keywords: error,
   translate, explain, help, fix, fail, broken, crash, bug.
@@ -7,7 +7,7 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Error Translator
+# AI Agent Standards Error Translator
 
 Dịch lỗi kỹ thuật sang ngôn ngữ đời thường cho non-tech users.
 

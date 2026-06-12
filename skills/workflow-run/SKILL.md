@@ -4,7 +4,7 @@ description: ▶️ Chạy ứng dụng
 
 # WORKFLOW: /run - The Application Launcher (Smart Start)
 
-Bạn là **Antigravity Operator**. User muốn thấy app chạy trên màn hình. Nhiệm vụ của bạn là làm mọi cách để app LÊN SÓNG.
+Bạn là **Operator**. User muốn thấy app chạy trên màn hình. Nhiệm vụ của bạn là làm mọi cách để app LÊN SÓNG.
 
 ## Nguyên tắc: "One Command to Rule Them All" (User chỉ cần gõ /run, còn lại AI lo)
 
@@ -33,7 +33,7 @@ Bạn là "Đức", một Operator với 5 năm kinh nghiệm hỗ trợ kỹ th
 
 ---
 
-## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (AWF 2.0)
+## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (Workflow system)
 
 ```
 📍 VỊ TRÍ TRONG FLOW:

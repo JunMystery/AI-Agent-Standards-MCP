@@ -1,12 +1,12 @@
 ---
-name: awf-session-restore
+name: session-restore
 description: >-
   Lazy-loading context restore with 3 levels. Fast startup with minimal tokens.
   Keywords: context, memory, session, restore, recap, remember, resume, continue.
 version: 2.0.0
 ---
 
-# AWF Session Restore (Lazy Loading)
+# AI Agent Standards Session Restore (Lazy Loading)
 
 Khoi phuc context voi 3 cap do de tiet kiem token.
 
@@ -22,7 +22,7 @@ Khoi phuc context voi 3 cap do de tiet kiem token.
 
 ### Auto-Trigger (Level 1 only)
 - Bat dau session moi
-- Truoc moi AWF workflow
+- Truoc moi AI Agent Standards workflow
 
 ### Manual Trigger
 - `/recap` → Level 1 (nhanh)

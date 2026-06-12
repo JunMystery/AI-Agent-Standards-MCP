@@ -271,7 +271,7 @@ When setting up a new project:
 
 ##  Version Info
 
-- **Framework Version:** 3.0.3
+- **Framework Version:** 3.1.0
 - **Last Updated:** 2026-06-11
 - **Status:** [OK] Production Ready
 

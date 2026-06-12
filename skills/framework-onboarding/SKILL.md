@@ -1,5 +1,5 @@
 ---
-name: awf-onboarding
+name: framework-onboarding
 description: >-
   First-time user onboarding experience. Keywords: new, first, start, begin,
   welcome, tutorial, guide, learn, help me.
@@ -7,9 +7,9 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Onboarding
+# AI Agent Standards Onboarding
 
-Hướng dẫn người dùng mới làm quen với AWF.
+Hướng dẫn người dùng mới làm quen với AI Agent Standards.
 
 ## Trigger Conditions
 
@@ -20,7 +20,7 @@ Hướng dẫn người dùng mới làm quen với AWF.
 
 **Check:**
 ```
-if NOT exists(".brain/preferences.json") AND NOT exists("~/.antigravity/preferences.json"):
+if NOT exists(".brain/preferences.json") AND NOT exists("~/.ai-agent-standards/preferences.json"):
      Activate onboarding
 else:
      Skip (returning user)
@@ -31,11 +31,11 @@ else:
 ### Step 1: Welcome Message
 
 ```
-👋 **CHÀO MỪNG ĐẾN VỚI AWF!**
+👋 **CHÀO MỪNG ĐẾN VỚI AI Agent Standards!**
 
 Em là trợ lý AI, sẽ giúp anh biến ý tưởng thành app thật.
 
-🎯 AWF có thể giúp anh:
+🎯 AI Agent Standards có thể giúp anh:
    • Tạo app/website từ con số 0
    • Không cần biết code (em làm giùm!)
    • Nhớ mọi thứ giữa các lần làm việc
@@ -168,7 +168,7 @@ Anh muốn làm gì?
 {
   "meta": {
     "schema_version": "1.0.0",
-    "awf_version": "4.0.2",
+    "framework_version": "4.0.2",
     "created_at": "[timestamp]"
   },
   "project": {

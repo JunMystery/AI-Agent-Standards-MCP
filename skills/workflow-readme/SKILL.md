@@ -1,8 +1,8 @@
-# 🚀 Antigravity Workflow Framework (AWF) v2.0
+# 🚀 workflow framework v2.0
 
 **Hệ thống Workflow TOÀN DIỆN cho mọi trình độ** - Từ newbie đến pro, AI đều lo được.
 
-> 💡 **Triết lý AWF 2.0:**
+> 💡 **Triết lý Workflow system:**
 > - AI ĐỀ XUẤT, Bạn DUYỆT (Smart Proposal)
 > - Mỗi workflow có PERSONA riêng (PM, Developer, Designer, Detective...)
 > - KHÔNG BAO GIỜ mất context (Lazy Checkpoint + Proactive Handover)
@@ -93,7 +93,7 @@
 
 ---
 
-## 🚀 AWF 2.0 - TÍNH NĂNG MỚI
+## 🚀 Workflow system - TÍNH NĂNG MỚI
 
 ### 1️⃣ Deep Interview (3 Câu Hỏi Vàng)
 Trước khi đề xuất, AI hỏi 3 câu cốt lõi:
@@ -156,7 +156,7 @@ Sau mỗi milestone, hiển thị:
 ├── session.json                   # 📍 Dynamic session (thay đổi liên tục)
 └── preferences.json               # ⚙️ Local override (nếu khác global)
 
-~/.antigravity/                    # GLOBAL (tất cả dự án)
+~/.ai-agent-standards/                    # GLOBAL (tất cả dự án)
 ├── preferences.json               # Default AI preferences
 └── defaults/                      # Templates
 ```
@@ -322,4 +322,4 @@ AI hỏi bằng tiếng Việt:
 
 ---
 
-*Antigravity Vibe Coding Suite v3.4 - Your dreams, our engineering.*
+*Vibe Coding Suite v3.4 - Your dreams, our engineering.*

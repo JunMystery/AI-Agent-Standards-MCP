@@ -46,12 +46,12 @@ def main():
         cursor_path = home / ".config" / "Cursor" / "User" / "globalStorage"
 
     targets = []
-    # Always attempt to configure Claude Desktop and Antigravity IDE (create folders if missing)
+    # Always attempt to configure Claude Desktop and Gemini-compatible MCP config.
     targets.append(("Claude Desktop", claude_path, True))
     
-    # Antigravity IDE config path (cross-platform)
-    antigravity_path = Path.home() / ".gemini" / "config" / "mcp_config.json"
-    targets.append(("Antigravity IDE", antigravity_path, True))
+    # Gemini-compatible MCP config path (cross-platform)
+    gemini_mcp_path = Path.home() / ".gemini" / "config" / "mcp_config.json"
+    targets.append(("Gemini MCP config", gemini_mcp_path, True))
 
     # Cursor Native config path (cross-platform)
     cursor_native_path = Path.home() / ".cursor" / "mcp.json"

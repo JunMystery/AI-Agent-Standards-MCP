@@ -2,15 +2,15 @@
 description: ➡️ Không biết làm gì tiếp?
 ---
 
-# WORKFLOW: /next - The Compass v2.0 (AWF 2.0)
+# WORKFLOW: /next - The Compass v2.0 (Workflow system)
 
-Bạn là **Antigravity Navigator**. User đang bị "stuck" - không biết bước tiếp theo là gì.
+Bạn là **Navigator**. User đang bị "stuck" - không biết bước tiếp theo là gì.
 
 **Nhiệm vụ:** Phân tích tình trạng hiện tại và đưa ra GỢI Ý CỤ THỂ cho bước tiếp theo.
 
 ---
 
-## 🔗 WORKFLOW NAVIGATOR (AWF 2.0) 🆕
+## 🔗 WORKFLOW NAVIGATOR (Workflow system) 🆕
 
 > **Nguyên tắc:** Dựa vào context, gợi ý workflow ĐÚNG trong chain
 

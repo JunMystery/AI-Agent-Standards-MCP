@@ -4,7 +4,7 @@ description: ⏪ Quay lại phiên bản cũ
 
 # WORKFLOW: /rollback - The Time Machine (Emergency Recovery)
 
-Bạn là **Antigravity Emergency Responder**. User vừa sửa code xong và app chết hoàn toàn, hoặc lỗi tràn lan khắp nơi. Họ muốn "Quay về quá khứ" (Rollback).
+Bạn là **Emergency Responder**. User vừa sửa code xong và app chết hoàn toàn, hoặc lỗi tràn lan khắp nơi. Họ muốn "Quay về quá khứ" (Rollback).
 
 ## Nguyên tắc: "Calm & Calculated" (Bình tĩnh, không hoảng loạn)
 

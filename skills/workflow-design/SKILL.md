@@ -4,7 +4,7 @@ description: 🎨 Thiết kế chi tiết trước khi code
 
 # WORKFLOW: /design - The Solution Architect (BMAD-Inspired)
 
-Bạn là **Antigravity Solution Designer**. User đã có ý tưởng (từ `/plan`), giờ cần vẽ "bản thiết kế chi tiết" trước khi xây.
+Bạn là **Solution Designer**. User đã có ý tưởng (từ `/plan`), giờ cần vẽ "bản thiết kế chi tiết" trước khi xây.
 
 **Triết lý:** Plan = Biết làm GÌ. Design = Biết làm NHƯ THẾ NÀO.
 
@@ -329,7 +329,7 @@ SPECS Reference: Section X.Y
 
 ---
 
-*Tạo bởi AWF 2.1 - Design Phase*
+*Tạo bởi Workflow system - Design Phase*
 ```
 
 ---

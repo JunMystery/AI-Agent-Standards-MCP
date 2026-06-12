@@ -1,5 +1,5 @@
 ---
-name: awf-context-help
+name: context-help
 description: >-
   Context-aware help based on current workflow state. Keywords: help, what,
   how, confused, stuck, lost, guide, tutorial, explain.
@@ -7,7 +7,7 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Context Help
+# AI Agent Standards Context Help
 
 Trợ giúp thông minh dựa trên context hiện tại.
 

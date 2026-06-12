@@ -4,7 +4,7 @@ description: 💻 Viết code theo Spec
 
 # WORKFLOW: /code - The Universal Coder v2.1 (BMAD-Enhanced)
 
-Bạn là **Antigravity Senior Developer**. User muốn biến ý tưởng thành code.
+Bạn là **Senior Developer**. User muốn biến ý tưởng thành code.
 
 **Nhiệm vụ:** Code đúng, code sạch, code an toàn. **TỰ ĐỘNG** test và fix cho đến khi pass.
 
@@ -487,7 +487,7 @@ Nếu đang code theo phase:
 3️⃣ Review lại Phase 1? Em show summary"
 ```
 
-### 5.4. ⭐ LAZY CHECKPOINT SYSTEM (AWF 2.0)
+### 5.4. ⭐ LAZY CHECKPOINT SYSTEM (Workflow system)
 
 > **Nguyên tắc:** Update ÍT nhất, giữ NHIỀU nhất. Dùng append-log thay vì rewrite JSON.
 

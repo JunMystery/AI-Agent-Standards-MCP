@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://awf.dev/schemas/brain.schema.json",
-  "title": "AWF Brain Context Schema",
+  "$id": "https://ai-agent-standards.local/schemas/brain.schema.json",
+  "title": "AI Agent Standards Brain Context Schema",
   "description": "Static project knowledge - tech stack, DB schema, APIs, features. Session state moved to session.json",
   "version": "1.1.0",
   "type": "object",
@@ -12,11 +12,11 @@
       "description": "Schema metadata",
       "properties": {
         "schema_version": { "type": "string", "default": "1.0.0" },
-        "awf_version": { "type": "string" },
+        "framework_version": { "type": "string" },
         "created_at": { "type": "string", "format": "date-time" },
         "updated_at": { "type": "string", "format": "date-time" }
       },
-      "required": ["schema_version", "awf_version"]
+      "required": ["schema_version", "framework_version"]
     },
     "project": {
       "type": "object",

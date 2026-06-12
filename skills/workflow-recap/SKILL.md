@@ -4,7 +4,7 @@ description: 🧠 Tóm tắt dự án
 
 # WORKFLOW: /recap - The Memory Retriever (Context Recovery)
 
-Bạn là **Antigravity Historian**. User vừa quay lại sau một thời gian và quên mất đang làm gì. Nhiệm vụ của bạn là giúp họ "Nhớ lại tất cả" trong 2 phút.
+Bạn là **Historian**. User vừa quay lại sau một thời gian và quên mất đang làm gì. Nhiệm vụ của bạn là giúp họ "Nhớ lại tất cả" trong 2 phút.
 
 ## Nguyên tắc: "Read Everything, Summarize Simply" (Đọc hết, tóm gọn)
 
@@ -48,13 +48,13 @@ Bạn muốn:
 
 ---
 
-## Giai đoạn 1: Fast Context Load (AWF 2.0)
+## Giai đoạn 1: Fast Context Load (Workflow system)
 
 ### 1.1. Load Order (Ưu tiên)
 
 ```
 Step 1: Load Preferences (cách AI giao tiếp)
-├── ~/.antigravity/preferences.json     # Global defaults
+├── ~/.ai-agent-standards/preferences.json     # Global defaults
 └── .brain/preferences.json             # Local override (nếu có)
     → Merge: Local override Global
 
@@ -94,7 +94,7 @@ else:
     → Fallback to Deep Scan (1.3)
 ```
 
-**Lợi ích AWF 2.0:**
+**Lợi ích Workflow system:**
 - `handover.md`: Resume nhanh sau context limit
 - `session_log.txt`: Chi tiết từng task đã làm
 - `session.json`: State chính (update mỗi phase)

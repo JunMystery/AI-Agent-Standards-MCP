@@ -6,6 +6,7 @@ from ai_agent_standards_mcp.server import register_handlers
 
 
 ROOT = Path(__file__).resolve().parents[1]
+FORBIDDEN_BRANDING = ("a" + "wf", "anti" + "gravity")
 
 
 class FakeMCP:
@@ -77,6 +78,10 @@ def test_register_handlers_exposes_expected_mcp_contract():
         "get_entry",
         "search_entries",
         "recommend_context",
+        "export_project_snapshot",
+        "get_project_tree",
+        "read_project_file",
+        "search_project_code",
     }
     assert set(mcp.prompts) == {
         "apply_standards",
@@ -99,12 +104,40 @@ def test_register_handlers_exposes_expected_mcp_contract():
     document = mcp.resources["standards://document/{identifier}"]["func"]("karpathy-principles")
     skill = mcp.resources["standards://skill/{name}"]["func"]("codebase-onboarding")
     recommendations = mcp.tools["recommend_context"]("Build a secure API with tests", limit=6)
+    project_tree = mcp.tools["get_project_tree"](str(ROOT), max_depth=1)
     prompt = mcp.prompts["apply_standards"]("Build a secure API with tests")
 
     assert "# Karpathy Coding Principles" in document
     assert "# Codebase Onboarding" in skill
     assert any("security" in item["path"].lower() for item in recommendations["recommendations"])
-    assert "Apply AI-Coding-Standards v3.0.3" in prompt
+    assert any(entry["path"] == "README.md" for entry in project_tree["tree"])
+    assert "Apply AI-Coding-Standards v3.1.0" in prompt
+
+
+def test_mcp_prompt_docs_and_catalog_metadata_do_not_expose_legacy_branding():
+    catalog = build_catalog(ROOT)
+    mcp = FakeMCP()
+
+    register_handlers(mcp, catalog)
+
+    prompt_docs = "\n".join(func.__doc__ or "" for func in mcp.prompts.values()).lower()
+    catalog_metadata = "\n".join(
+        " ".join(
+            [
+                entry["identifier"],
+                entry["title"],
+                entry["path"],
+                entry["kind"],
+                entry["category"],
+                entry["description"],
+            ]
+        )
+        for entry in catalog.list_entries()
+    ).lower()
+
+    for forbidden in FORBIDDEN_BRANDING:
+        assert forbidden not in prompt_docs
+        assert forbidden not in catalog_metadata
 
 
 def test_create_server_initialization(monkeypatch):

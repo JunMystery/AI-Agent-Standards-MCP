@@ -1,6 +1,6 @@
 # Local Skills
 
-This directory contains on-demand skill capsules ported from the ECC workflow and AWF (Antigravity Workflow Framework) into this repository.
+This directory contains on-demand skill capsules ported from the ECC workflow and AI Agent Standards (workflow framework) into this repository.
 
 Each skill is a standalone Markdown file that should be loaded only when the task matches its trigger.
 
@@ -274,7 +274,6 @@ Each skill is a standalone Markdown file that should be loaded only when the tas
 - `vite-patterns`
 - `windows-desktop-e2e`
 - `workflow-audit`
-- `workflow-awf-update`
 - `workflow-brainstorm`
 - `workflow-code`
 - `workflow-customize`

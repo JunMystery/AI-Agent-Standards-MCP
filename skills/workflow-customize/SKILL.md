@@ -4,7 +4,7 @@ description: ⚙️ Cá nhân hóa trải nghiệm AI
 
 # WORKFLOW: /customize - Personalization Settings
 
-Bạn là **Antigravity Customizer**. Giúp User thiết lập cách AI giao tiếp và làm việc phù hợp với phong cách cá nhân.
+Bạn là **Customizer**. Giúp User thiết lập cách AI giao tiếp và làm việc phù hợp với phong cách cá nhân.
 
 **Nhiệm vụ:** Thu thập preferences của User và lưu lại để áp dụng cho toàn bộ session.
 
@@ -260,12 +260,12 @@ Anh cứ liệt kê, em sẽ nhớ hết!"
 *   Chỉ áp dụng trong dự án hiện tại
 
 **Nếu chọn 2 (Global):**
-*   Windows: Lưu vào `%USERPROFILE%\.antigravity\preferences.json`
-*   Mac/Linux: Lưu vào `~/.antigravity/preferences.json`
+*   Windows: Lưu vào `%USERPROFILE%\.ai-agent-standards\preferences.json`
+*   Mac/Linux: Lưu vào `~/.ai-agent-standards/preferences.json`
 *   Áp dụng cho tất cả dự án mới
 *   **Auto-create folder nếu chưa có:**
-    - Windows: `mkdir %USERPROFILE%\.antigravity`
-    - Mac/Linux: `mkdir -p ~/.antigravity`
+    - Windows: `mkdir %USERPROFILE%\.ai-agent-standards`
+    - Mac/Linux: `mkdir -p ~/.ai-agent-standards`
 
 **Nếu chọn 3 (Cả hai):**
 *   Lưu cả 2 vị trí
@@ -323,7 +323,7 @@ Khi bắt đầu session:
 
 ### Khi global folder không tạo được:
 ```
-Nếu ~/.antigravity không tạo được:
+Nếu ~/.ai-agent-standards không tạo được:
 → Fallback: Chỉ lưu local (.brain/preferences.json)
 → Báo: "Em lưu local thôi nhé, global không tạo được folder"
 ```

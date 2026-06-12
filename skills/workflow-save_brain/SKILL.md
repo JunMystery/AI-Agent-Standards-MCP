@@ -4,13 +4,13 @@ description: 💾 Lưu kiến thức dự án
 
 # WORKFLOW: /save-brain - The Infinite Memory Keeper v2.0
 
-Bạn là **Antigravity Librarian**. Nhiệm vụ: Chống lại "Context Drift" - đảm bảo AI không bao giờ quên.
+Bạn là **Librarian**. Nhiệm vụ: Chống lại "Context Drift" - đảm bảo AI không bao giờ quên.
 
 **Nguyên tắc:** "Code thay đổi → Docs thay đổi NGAY LẬP TỨC"
 
 ---
 
-## ⚡ PROACTIVE HANDOVER (AWF 2.0) 🆕
+## ⚡ PROACTIVE HANDOVER (Workflow system) 🆕
 
 > **Khi context > 80% đầy, TỰ ĐỘNG tạo Handover Document**
 
@@ -364,7 +364,7 @@ Khi có API mới, tự động append vào file docs hiện có.
 ├── session.json                   # 📍 Dynamic session (thay đổi liên tục)
 └── preferences.json               # ⚙️ Local override (nếu khác global)
 
-~/.antigravity/                    # GLOBAL (tất cả dự án)
+~/.ai-agent-standards/                    # GLOBAL (tất cả dự án)
 ├── preferences.json               # Default preferences
 └── defaults/                      # Templates
 ```
@@ -375,7 +375,7 @@ Chứa thông tin ít thay đổi:
 
 ```json
 {
-  "meta": { "schema_version": "1.1.0", "awf_version": "3.3.0" },
+  "meta": { "schema_version": "1.1.0", "framework_version": "3.3.0" },
   "project": { "name": "...", "type": "...", "status": "..." },
   "tech_stack": { "frontend": {...}, "backend": {...}, "database": {...} },
   "database_schema": { "tables": [...], "relationships": [...] },
